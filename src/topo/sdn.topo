@@ -1,0 +1,28 @@
+---
+sdn:
+  name: AUTO
+  networks:
+    - name: c2c
+      region: us-west-1 
+      count: 1
+      edge:
+        - cloud-gateway:
+          count: 1
+          regions:
+            - us-west-1
+            - us-east-1
+        - site-gateway:
+          count: 0
+        - mobile:
+          count: 0 
+    - name: s2c
+      region: us-west-1
+      count: 1
+      edge:
+        - cloud-gateway:
+          count: 1
+          regions:
+            - us-east-1  
+        - site-gateway:
+          count: 1 
+...
