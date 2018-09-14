@@ -32,19 +32,20 @@ class SdnNetObj(object):
 
         elif type == "site":
             tmp_obj = SdnSiteCloudObj(config_dict)
-            self.edge_cloud_list.append(tmp_obj) 
+            self.edge_site_list.append(tmp_obj) 
 
         elif type == "mobile":
             tmp_obj = SdnMobileCloudObj(config_dict)
-            self.edge_cloud_list.append(tmp_obj) 
+            self.edge_mobile_list.append(tmp_obj) 
         
 
 class SdnEdgeParent(object):
-    def __init__(self, config_dict):
+    def __init__(self, config_dict, common):
         self.config = config_dict
+        self.common = common
 
 class SdnEdgeCloudObj(SdnEdgeParent):
-    def __init__(self, config_dict):
+    def __init__(self, config_dict, common):
         SdnEdgeParent.__init__(self, config_dict )
 
     def sdn_deploy(self):
@@ -59,7 +60,7 @@ class SdnEdgeCloudObj(SdnEdgeParent):
     def aws_destroy(self):
         pass 
 
-class SdnEdgeSiteObj(SdnEdgeParent):
+class SdnEdgeSiteObj(SdnEdgeParent, common):
     def __init__(self, config_dict):
         SdnEdgeParent.__init__(self, config_dict ) 
 
@@ -69,7 +70,7 @@ class SdnEdgeSiteObj(SdnEdgeParent):
     def sdn_destroy(self):
         pass
 
-class SdnEdgeMobileObj(SdnEdgeParent):
+class SdnEdgeMobileObj(SdnEdgeParent, common):
     def __init__(self, config_dict):
         SdnEdgeParent.__init__(self, config_dict )
 

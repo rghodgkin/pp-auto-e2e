@@ -4,6 +4,7 @@
 import logging
 import pdb
 import sdn_e2e.conf.common.utils as utils
+import sdn_e2e.conf.common.sdn_class as sdn_class
 from sdn_e2e.conf.common.constants import AwsVpc
 from sdn_e2e.conf.common.constants import TopoTemps
 from sdn_e2e.conf.common.constants import SDNNetTrans 
@@ -81,8 +82,16 @@ def gen_sdn_topo(tv, common):
   
 def gen_sdn_topo(topo, common):
     """
-    This function populates 'common.sdn[]' list with network objects
+    This function returns a list of 'network' objects that ultimately populates 
+    'common.sdn[]' list with network objects
     """
-    
+    return_net_list = []
+
+    topo_net_list = topo['networks']
+    for net_item in topo_net_list:
+        x = sdn_class.SdnNetObj(net_item, common)
+        x.gen_edge_data()
+        return_net_list.append(x) 
+
 
     
