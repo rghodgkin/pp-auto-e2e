@@ -4,7 +4,9 @@
 import logging
 import yaml
 import pdb
-import sdn_e2e.conf.common.sdn_class as sdn 
+import pytest
+import sdn_e2e.conf.common.sdn_class as sdn_class 
+import sdn_e2e.conf.common.sdn_utils as sdn_utils 
 import sdn_e2e.conf.common.utils as utils 
 
 
@@ -16,8 +18,8 @@ class COMMON(object):
         self.topo_virgin = {}
         self.config = {} 
         self.sdn = [] 
-        self.gen_topo_dict()
         self.gen_config_dict()
+        self.gen_topo_dict()
         self.gen_sdn_data() 
 
     def gen_topo_dict(self):
@@ -32,8 +34,15 @@ class COMMON(object):
         if output[0]:
             self.topo_virgin = output[1]
         else:
-            pytest.exit(msg="Error: gen_topo_dict did not complete successfully \
-                           exiting")
+            pytest.exit(msg="Error: gen_topo_dict YAML parse of topo \
+                        did not complete successfully exiting")
+
+        output = sdn_utils.gen_sdn_topo(self.topo_virgin, self)
+        if output[0]:
+            self.topo = output[1]
+        else:
+            pytest.exit(msg="Error: gen_topo_dict generation of full \
+                             SDN topo failed exiting")
 
     def gen_config_dict(self):
         '''

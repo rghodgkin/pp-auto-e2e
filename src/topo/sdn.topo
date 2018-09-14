@@ -1,28 +1,19 @@
----
 sdn:
   name: AUTO
-  networks:
-    - name: c2c
-      region: us-west-1 
-      count: 1
-      edge:
-        - cloud-gateway:
-          count: 1
-          regions:
-            - us-west-1
-            - us-east-1
-        - site-gateway:
-          count: 0
-        - mobile:
-          count: 0 
-    - name: s2c
-      region: us-west-1
-      count: 1
-      edge:
-        - cloud-gateway:
-          count: 1
-          regions:
-            - us-east-1  
-        - site-gateway:
-          count: 1 
-...
+  network:
+    count: 1
+    sdn_account: demo_sde_sd_enterprise
+    sdn_network_type: sd-wan
+    sdn_zone: us-east-1
+    edge_list:
+      - type: cloud
+        count: 1
+        cloud_provider: aws
+        region: us-east-1
+      - type: cloud
+        count: 1
+        cloud_provider: aws
+        region: us-west-1
+      - type: site
+        count: 1
+        region: us-east-1
