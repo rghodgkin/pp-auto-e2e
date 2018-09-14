@@ -3,13 +3,13 @@ import os
 class TopoTemps(object):
     sdn = {'name':'', 'network_list':[]}
     network = {'name':'', 'sdn_description':'', 'sdn_account': '', \
-               'sdn_network_type': '', 'sdn_zone': '', 'edge_list':[],}
+               'sdn_network_type': '', 'sdn_zone': '', 'edge_list':[]}
     cloud = {'name':'', 'sdn_description':'', 'sdn_network':'', \
              'sdn_cloud_provider':'', 'aws_cloud_region':'', \
              'sdn_cloud_location':'', 'aws_cloud_account':'', \
-             'IPv4_CIDR_block':''} 
+             'IPv4_CIDR_block':'', 'type':'cloud'} 
     site = {'name':'', 'sdn_description':'', 'sdn_site_type':'mobile', \
-            'sdn_network':'', 'sdn_zone':''}
+            'sdn_network':'', 'sdn_zone':'', 'type':'site'}
            
 class SDNNetTrans(object):
     aws = {'us-east-1':'Ashburn, VA', \

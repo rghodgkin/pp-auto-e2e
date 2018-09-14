@@ -54,7 +54,7 @@ def gen_sdn_topo(tv, common):
                 edge_kl['aws_cloud_region'] = edge_item['region']
                 edge_kl['sdn_cloud_location'] = SDNCloudTrans.aws[edge_item['region']]
                 edge_kl['aws_cloud_account'] = common.config['aws']['account_number']
-                edge_kl['IPv4_CIDR__block'] = vpc_ipv4_sub_list.pop()
+                edge_kl['IPv4_CIDR_block'] = vpc_ipv4_sub_list.pop()
   
                 # Add edge_kl to net_kl['edge_list']
                 net_kl['edge_list'].append(edge_kl)
@@ -79,6 +79,10 @@ def gen_sdn_topo(tv, common):
           
       return 0, {} 
   
-
+def gen_sdn_topo(topo, common):
+    """
+    This function populates 'common.sdn[]' list with network objects
+    """
+    
 
     
