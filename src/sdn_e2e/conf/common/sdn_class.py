@@ -6,8 +6,8 @@ import yaml
 import pdb
 
 class SdnNetObj(object):
-    def __init__(self, config_dict, common):
-        self.config = config_dict
+    def __init__(self, topo_dict, common):
+        self.topo = topo_dict
         self.common = common
         self.edge_cloud_list = []
         self.edge_site_list = []
@@ -20,33 +20,33 @@ class SdnNetObj(object):
          all edge objects, passing in edge specific dict info
         '''
         logging.info("Inside gen_edge_data") 
-        logging.info("Config data is: %s" % self.config)
+        logging.info("Topo data is: %s" % self.topo)
 
-        for edge_item in self.config['edge_list']:
+        for edge_item in self.topo['edge_list']:
             self.create_edge_inst(edge_item['type'], edge_item)
-
-    def create_edge_inst(self, type, config_dict):
+        
+    def create_edge_inst(self, type, topo_dict):
         if type == "cloud":
-            tmp_obj = SdnEdgeCloudObj(config_dict)
+            tmp_obj = SdnEdgeCloudObj(topo_dict, self.common)
             self.edge_cloud_list.append(tmp_obj) 
 
         elif type == "site":
-            tmp_obj = SdnSiteCloudObj(config_dict)
+            tmp_obj = SdnSiteCloudObj(topo_dict, self.common)
             self.edge_site_list.append(tmp_obj) 
 
         elif type == "mobile":
-            tmp_obj = SdnMobileCloudObj(config_dict)
+            tmp_obj = SdnMobileCloudObj(topo_dict, self.common)
             self.edge_mobile_list.append(tmp_obj) 
         
 
 class SdnEdgeParent(object):
-    def __init__(self, config_dict, common):
-        self.config = config_dict
+    def __init__(self, topo_dict, common):
+        self.topo = topo_dict
         self.common = common
 
 class SdnEdgeCloudObj(SdnEdgeParent):
-    def __init__(self, config_dict, common):
-        SdnEdgeParent.__init__(self, config_dict )
+    def __init__(self, topo_dict, common):
+        SdnEdgeParent.__init__(self, topo_dict, common)
 
     def sdn_deploy(self):
         pass
@@ -60,9 +60,9 @@ class SdnEdgeCloudObj(SdnEdgeParent):
     def aws_destroy(self):
         pass 
 
-class SdnEdgeSiteObj(SdnEdgeParent, common):
-    def __init__(self, config_dict):
-        SdnEdgeParent.__init__(self, config_dict ) 
+class SdnEdgeSiteObj(SdnEdgeParent):
+    def __init__(self, topo_dict, common):
+        SdnEdgeParent.__init__(self, topo_dict, common) 
 
     def sdn_deploy(self):
         pass
@@ -70,9 +70,9 @@ class SdnEdgeSiteObj(SdnEdgeParent, common):
     def sdn_destroy(self):
         pass
 
-class SdnEdgeMobileObj(SdnEdgeParent, common):
-    def __init__(self, config_dict):
-        SdnEdgeParent.__init__(self, config_dict )
+class SdnEdgeMobileObj(SdnEdgeParent):
+    def __init__(self, topo_dict, common):
+        SdnEdgeParent.__init__(self, topo_dict, common)
 
     def sdn_deploy(self):
         pass

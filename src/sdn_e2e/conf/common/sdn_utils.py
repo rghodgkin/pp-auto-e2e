@@ -22,7 +22,7 @@ def gen_sdn_topo(tv, common):
     try: 
       # Configure SDN related data
       sdn_name = tv['sdn']['name']
-      sdn = {'name':sdn_name, 'networks':[] }
+      sdn = {'name':sdn_name, 'network':[] }
   
       # Configure Network related data
       net_count = tv['sdn']['network']['count']
@@ -69,29 +69,35 @@ def gen_sdn_topo(tv, common):
   
             edge_cntr += 1 
          
-          # Add net_kl to sdn['networks']
-          sdn['networks'].append(net_kl)
+          # Add net_kl to sdn['network']
+          sdn['network'].append(net_kl)
           net_cntr += 1
 
       return 1, sdn 
 
     except:
-      logging.error("Error: gen_sdn_topo method did not execute cleanly - exiting")
+      logging.error("Error: gen_sdn_topo method did not execute cleanly")
           
       return 0, {} 
   
-def gen_sdn_topo(topo, common):
+def gen_sdn_data(topo, common):
     """
     This function returns a list of 'network' objects that ultimately populates 
     'common.sdn[]' list with network objects
     """
-    return_net_list = []
+    try:
+        ret_net_list = []
+        topo_net_list = topo['network']
+        for net_item in topo_net_list:
+            x = sdn_class.SdnNetObj(net_item, common)
+            x.gen_edge_data()
+            ret_net_list.append(x) 
+    
+        return 1, ret_net_list
 
-    topo_net_list = topo['networks']
-    for net_item in topo_net_list:
-        x = sdn_class.SdnNetObj(net_item, common)
-        x.gen_edge_data()
-        return_net_list.append(x) 
+    except: 
+        logging.error("Error: gen_sdn_data method did not complete properly")
 
+        return 0, {}
 
     

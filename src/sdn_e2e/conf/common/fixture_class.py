@@ -21,6 +21,7 @@ class COMMON(object):
         self.gen_config_dict()
         self.gen_topo_dict()
         self.gen_sdn_data() 
+        pdb.set_trace()
 
     def gen_topo_dict(self):
         '''
