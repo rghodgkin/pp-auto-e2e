@@ -8,8 +8,10 @@ class TopoTemps(object):
              'sdn_cloud_provider':'', 'aws_cloud_region':'', \
              'sdn_cloud_location':'', 'aws_cloud_account':'', \
              'IPv4_CIDR_block':'', 'type':'cloud'} 
-    site = {'name':'', 'sdn_description':'', 'sdn_site_type':'mobile', \
+    site = {'name':'', 'sdn_description':'', \
             'sdn_network':'', 'sdn_zone':'', 'type':'site'}
+    mobile = {'name':'', 'sdn_description':'', \
+            'sdn_network':'', 'sdn_zone':'', 'type':'mobile'}
            
 class SDNNetTrans(object):
     aws = {'us-east-1':'Ashburn, VA', \

@@ -4,6 +4,7 @@
 import logging
 import yaml
 import pdb
+import sdn_e2e.conf.aws.aws_utils as aws_utils
 
 class SdnNetObj(object):
     def __init__(self, topo_dict, common):
@@ -37,6 +38,13 @@ class SdnNetObj(object):
         elif type == "mobile":
             tmp_obj = SdnMobileCloudObj(topo_dict, self.common)
             self.edge_mobile_list.append(tmp_obj) 
+
+    def list_edge_inst(self):
+        '''
+        This function will list all the 'edge' instances from
+        the various *_cloud_list arrays 
+        ''' 
+        pass
         
 
 class SdnEdgeParent(object):
@@ -47,6 +55,10 @@ class SdnEdgeParent(object):
 class SdnEdgeCloudObj(SdnEdgeParent):
     def __init__(self, topo_dict, common):
         SdnEdgeParent.__init__(self, topo_dict, common)
+        self.aws_data = {}
+        pdb.set_trace()
+        self.aws_deploy()
+        
 
     def sdn_deploy(self):
         pass
@@ -54,7 +66,8 @@ class SdnEdgeCloudObj(SdnEdgeParent):
     def sdn_destroy(self):
         pass
 
-    def aws_deploy(self):
+    def aws_deploy(self, aws_data):
+        aws_utils.deploy_aws_cloud(aws_data, self.topo)
         pass 
 
     def aws_destroy(self):
