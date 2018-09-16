@@ -6,6 +6,7 @@ import yaml
 import pdb
 import sdn_e2e.conf.aws.aws_client_lib as aws
 import sdn_e2e.conf.common.utils as utils
+from sdn_e2e.conf.common.constants import AwsVgw
 
 def deploy_aws_cloud(topo):
     # All AWS JSON output will be stored within aws_data{} dict and
@@ -40,11 +41,40 @@ def deploy_aws_cloud(topo):
         logging.error("deploy_aws_cloud: AWS provision of IP Subnet failed")
         return 0, {}
 
-    pdb.set_trace()
+    # 3. Deploy Internet Gateway and attach to VPC
+    result = aws.create_aws_ig(topo['aws_cloud_region'],
+                               topo['vpcid']) 
+    if result[0] == 1:
+        aws_data['ig'] = result[1]
+        topo['ig'] = aws_data['ig']['InternetGateway']['InternetGatewayId']
+    else:
+        logging.error("deploy_aws_cloud: AWS provision of IP Gateway failed")
+        return 0, {}
+   
+    # 4. Deploy VPN Gateway
+    result = aws.create_aws_vg(topo['aws_cloud_region'],
+                               topo['ipv4_subnet1']['az'], 
+                               topo['vpcid'], 
+                               AwsVgw.AWS_BGP_ASN)
+    if result[0] == 1:
+        aws_data['vg'] = result[1]
+        topo['vg'] = aws_data['VpnGateway']['VpnGatewayId']
+    else:
+        logging.error("deploy_aws_cloud: AWS provision of Virtual Private Gateway failed")
+        return 0, {}
 
-
-
-  
+    # 5. Add default route into Routing table
+    pdb.set_trace() 
+    result = aws.create_aws_route(topo['aws_cloud_region'],
+                                  topo['rtid'],
+                                  '0.0.0.0/0',
+                                  topo['ig'])
+    if result[0] == 1:
+        pass
+    else:
+        logging.error("deploy_aws_cloud: AWS provision of default route in AWS failed")
+        return 0, {}
+                          
 
  
     return 1, aws_data

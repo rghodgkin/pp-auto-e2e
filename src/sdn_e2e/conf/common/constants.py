@@ -34,3 +34,6 @@ class AwsVpc(object):
     VPC_SUP_MASK = '8'
     VPC_SUB_PREFIX = '16'
 
+class AwsVgw(object):
+    AWS_BGP_ASN = 7224 
+
