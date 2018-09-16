@@ -17,7 +17,7 @@ class SdnNetObj(object):
 
     def gen_edge_data(self):
         '''
-        This method is going to parse the self.config_dict and create
+        This method is going to parse the self.topo['edge_list'] and create
          all edge objects, passing in edge specific dict info
         '''
         logging.info("Inside gen_edge_data") 
@@ -66,8 +66,8 @@ class SdnEdgeCloudObj(SdnEdgeParent):
     def sdn_destroy(self):
         pass
 
-    def aws_deploy(self, aws_data):
-        aws_utils.deploy_aws_cloud(aws_data, self.topo)
+    def aws_deploy(self):
+        self.aws_data = aws_utils.deploy_aws_cloud(self.topo)
         pass 
 
     def aws_destroy(self):
