@@ -28,4 +28,24 @@ def create_aws_subnet(region, vpcid, az, cidr):
             subnet")
         return 0, {}
 
+def describe_aws_region(region):
+    try:
+        ec2 = boto3.client('ec2', region_name=region)
+        response = ec2.describe_regions()
+        return response
+    except:
+        logging.error("Error: describe_aws_region failed to describe regions")
+
+def describe_aws_az(region):
+    try:
+        ec2 = boto3.client('ec2', region_name=region)
+        response = ec2.describe_availability_zones()
+        return response
+    except:
+        logging.error("Error: describe_aws_region failed to describe AZ's")
+
+
+
+
+
     

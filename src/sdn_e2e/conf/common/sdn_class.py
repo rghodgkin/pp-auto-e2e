@@ -56,7 +56,6 @@ class SdnEdgeCloudObj(SdnEdgeParent):
     def __init__(self, topo_dict, common):
         SdnEdgeParent.__init__(self, topo_dict, common)
         self.aws_data = {}
-        pdb.set_trace()
         self.aws_deploy()
         
 
@@ -67,8 +66,14 @@ class SdnEdgeCloudObj(SdnEdgeParent):
         pass
 
     def aws_deploy(self):
-        self.aws_data = aws_utils.deploy_aws_cloud(self.topo)
-        pass 
+        status = aws_utils.deploy_aws_cloud(self.topo)
+        if status[0] == 1:
+            self.aws_data = aws_utils.deploy_aws_cloud(self.topo)
+            return 1
+        else:
+            logging.error("Error: Edge Cloud.aws_deploy: Failed to deploy edge \
+                           cloud %s" % self.topo.name)
+            return 0
 
     def aws_destroy(self):
         pass 

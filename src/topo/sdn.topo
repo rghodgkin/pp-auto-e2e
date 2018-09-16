@@ -9,11 +9,11 @@ sdn:
       - type: cloud
         count: 1
         cloud_provider: aws
-        region: us-east-1
+        region: us-west-1
       - type: cloud
         count: 1
         cloud_provider: aws
-        region: us-west-1
+        region: us-west-2
       - type: site
         count: 1
         region: us-east-1
